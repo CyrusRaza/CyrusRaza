@@ -1,4 +1,5 @@
 <div align="center">
+<img src="https://komarev.com/ghpvc/?username=CyrusRaza" width="1" height="1" alt="" />
 
 # Hi, I'm Cyrus Naqvi 👋
 
