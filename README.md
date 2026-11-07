@@ -2,51 +2,102 @@
 
 # Hi, I'm Cyrus Naqvi 👋
 
-### Embedded Software Engineer | Firmware Developer | IoT & Embedded Linux
+### Embedded Software Engineer | Firmware | IoT Connectivity | Edge Vision
 
-Building reliable firmware and connected embedded systems — from microcontrollers to Linux-based gateways.
+I build firmware that holds up on real hardware: concurrent C on microcontrollers, wireless links that don't drop data, and test pipelines that catch problems before hardware does.
 
-[![Profile Views](https://komarev.com/ghpvc/?username=CyrusRaza&label=Profile%20views&color=0e75b6&style=flat)](https://github.com/CyrusRaza)
-[![GitHub followers](https://img.shields.io/github/followers/CyrusRaza?label=Followers&style=flat)](https://github.com/CyrusRaza?tab=followers)
 [![Email](https://img.shields.io/badge/Email-c.razanaqvi%40gmail.com-D14836?style=flat&logo=gmail&logoColor=white)](mailto:c.razanaqvi@gmail.com)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/cyrus-naqvi-b96282194/)
 
-📍 Berlin, Germany · MSc Embedded Systems, TU Chemnitz
+📍 Berlin, Germany · MSc Embedded Systems, TU Chemnitz · Open to embedded and firmware roles across Germany
 
 </div>
 
 ---
 
-## About Me
+## What I bring
 
-I'm an Embedded Software Engineer with an MSc in Embedded Systems from **TU Chemnitz** and a background in Mechatronics.
+- **Firmware ownership.** Sole developer of the ESP32 firmware for a LoRaWAN communication system at TU Chemnitz: architecture, concurrency, radio protocol handling and hardware validation.
+- **Reliability you can measure.** Resend-on-missing-ACK logic that delivered **0 lost packets in a 24-hour continuous run** on real hardware.
+- **Real-time concurrency.** FreeRTOS tasks, mutexes and semaphores in real device firmware; lock-free ring buffers and C11 threads in my own frameworks.
+- **Clean, testable C.** Strategy pattern with function-pointer tables, opaque objects, Unity unit tests, CMake and GitHub Actions CI on every push.
+- **Hardware in the field.** Installation, calibration and repair of analytical instruments (electron microscopes, UV spectroscopes) at customer sites: part of about 10 installations and 50+ calibrations.
 
-My experience includes firmware development in **C**, RTOS-based concurrency, wireless communication, IoT architectures, and hardware-level debugging. I developed an ESP32-based LoRaWAN communication system involving multithreaded firmware, synchronization, payload fragmentation, and validation on real hardware.
+---
 
-I enjoy working close to the hardware: understanding system constraints, designing modular firmware, debugging interfaces, and building systems that behave reliably outside the development environment.
+## Featured Projects
 
-**Areas of interest and experience**
-- Embedded firmware in C and microcontroller-based systems
-- RTOS concepts, multithreading, mutexes and semaphores
-- IoT connectivity: LoRaWAN, Zigbee, MQTT and WebSocket
-- Embedded Linux and Raspberry Pi-based systems
-- Hardware interfaces, debugging and system validation
-- Computer vision and event-camera research
+### 🔌 [IoT Device Simulator: Modular Transport and Command Framework in C](https://github.com/CyrusRaza/iot_device_sim)
+A simulated IoT edge device that receives commands over a runtime-selectable transport and applies them to device state.
 
-## Technical Skills
+- MQTT client (libmosquitto) and WebSocket server (libwebsockets) behind one function-pointer interface: new transports plug in without touching application code
+- Producer/consumer split: transport callbacks feed a bounded ring buffer with C11 atomics and semaphores; a dedicated parser thread applies commands under a mutex
+- **43 Unity tests**, CMake, Docker Compose broker, GitHub Actions CI
 
-| Category | Technologies |
+**Stack:** C11 · MQTT · WebSocket · C11 threads · Unity · CMake · Docker · GitHub Actions
+
+### 👁️ [Motion-Gated ROI Extraction for Edge AI on Microcontrollers](https://github.com/CyrusRaza/stm32-sparse-vision)
+Event-camera-inspired sparse processing on a conventional camera: detect what moved, cut the frame down to a few regions of interest, and run the detector only there. Target: STM32H7 (Cortex-M7, 480 MHz).
+
+- Luma-only frame differencing, thresholding and morphology, then two ROI strategies: contours and a recursive X-Y cut that needs **under 2 KB of memory**
+- Evaluation harness against the **CDnet 2014** benchmark with pixel-level recall/precision and per-stage timing
+- Separate PC and Cortex-M7 CMake targets with cross-compilation, both built in CI
+
+**Stack:** C++20 · OpenCV · STM32H7 · arm-none-eabi-gcc · CMake · GitHub Actions
+
+### 🎯 [motpipe: Multi-Object Tracking Pipeline](https://github.com/CyrusRaza/motpipe)
+Detection and tracking framework with detectors and trackers swappable at runtime.
+
+- YOLOv8, YOLOv5, Faster R-CNN and SSD detectors; SORT, DeepSORT and ByteTrack trackers, all behind two interfaces and a registry
+- Installable Python package with a CLI, optional extras and CI
+- Benchmarked every pair: **56 FPS at 1080p** with YOLOv8n + ByteTrack on an RTX 3050 laptop GPU, tracking under 2 ms per frame
+
+**Stack:** Python · PyTorch · OpenCV · YOLO · ByteTrack · GitHub Actions
+
+---
+
+## Experience
+
+**Embedded Software Engineer | TU Chemnitz** (Oct 2023 - Oct 2025)
+- Designed and built the complete C firmware for a LoRaWAN communication system on ESP32 as the sole embedded developer
+- Structured the firmware into concurrent FreeRTOS tasks for main logic, sending and receiving, synchronised with mutexes and semaphores
+- Implemented payload fragmentation within EU868 duty-cycle limits and drove the LoRaWAN module over UART with AT commands
+- Built a LoRaWAN alternative to the Wi-Fi data path of an external company's IOTA platform, using its encryption API
+- Wrote the Python tooling that forwarded device data over MQTT, and integrated the device with the server team's software
+- Validated on real hardware: 0 packets lost in a 24-hour continuous run
+
+**Student Research Assistant | TU Chemnitz** (Sep 2023 - Mar 2024)
+- Developed MATLAB/Simulink software drivers for PID control experiments in control engineering teaching
+
+**Service Engineer | Analytical Measuring Systems, Karachi** (Dec 2019 - Apr 2021)
+- Installed, commissioned, calibrated and repaired electron microscopes and UV spectroscopes at customer sites
+- Diagnosed hardware and software faults on site and documented the service work
+
+---
+
+## More Projects
+
+- **IoT Smart Irrigation:** multi-node system with MSP430 sensor nodes, an STM32L4 gateway (my firmware, STM32CubeIDE + HAL) and a Raspberry Pi running Embedded Linux, over Zigbee and LoRaWAN
+- **CWE Weakness Handling (MSc research project):** extended a Django requirements engineering tool with MITRE CWE import, schema validation, search and project linking, with a full test campaign
+- **Event-Camera Optical Flow (MSc thesis):** compared contrast maximization with neural-network approaches in Python and PyTorch
+- **Intelligent Insecticide Sprayer (BEng thesis):** real-time, multithreaded plant classification on a Raspberry Pi mounted on a UGV
+- **Line-Following Robot:** closed-loop PID motor control with PWM and IR feedback
+
+---
+
+## Tech Stack
+
+| | |
 |---|---|
-| Programming | C, C++, Python, MATLAB, VHDL, Assembly (AVR/ARM) |
-| MCUs & Platforms | ESP32, STM32 (ARM Cortex-M), MSP430, Raspberry Pi |
-| Operating Systems | FreeRTOS, Zephyr, Bare-metal, Embedded Linux |
-| Wireless & IoT | LoRaWAN (EU868), Zigbee, Wi-Fi |
-| Communication | MQTT, WebSocket |
-| Peripherals & Interfaces | UART, SPI, I²C, PWM, ADC, GPIO, Timers |
-| Concurrency | Threads, Mutexes, Semaphores |
-| Debugging | GDB, JTAG/SWD, Oscilloscope, Logic Analyzer |
-| Build, Test & CI | CMake, Git, Docker, GitHub Actions, Unity |
-| Computer Vision & ML | OpenCV, PyTorch, TensorFlow, NumPy, Event Cameras |
+| **Languages** | C, Python, C++, MATLAB |
+| **Microcontrollers** | ESP32, STM32 (ARM Cortex-M), MSP430, Raspberry Pi |
+| **RTOS & OS** | FreeRTOS, bare-metal, Embedded Linux |
+| **Connectivity** | LoRaWAN (EU868), Zigbee, MQTT, WebSocket |
+| **Interfaces** | UART, SPI, I²C, PWM, ADC, GPIO, timers |
+| **Concurrency** | tasks and threads, mutexes, semaphores, lock-free ring buffers |
+| **Build, Test & CI** | CMake, Git, Unity, GitHub Actions, Docker |
+| **Vision & ML** | OpenCV, PyTorch, TensorFlow, NumPy, event cameras |
+| **Also worked with** | Zephyr, GDB, JTAG/SWD, oscilloscope, logic analyzer, VHDL, Django, SQLite |
 
 <div align="center">
 
@@ -54,7 +105,6 @@ I enjoy working close to the hardware: understanding system constraints, designi
 ![C++](https://img.shields.io/badge/C++-00599C?style=flat-square&logo=cplusplus&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 ![FreeRTOS](https://img.shields.io/badge/FreeRTOS-2C3E50?style=flat-square)
-![Zephyr](https://img.shields.io/badge/Zephyr-4B0082?style=flat-square)
 ![STM32](https://img.shields.io/badge/STM32-03234B?style=flat-square&logo=stmicroelectronics&logoColor=white)
 ![ESP32](https://img.shields.io/badge/ESP32-E7352C?style=flat-square&logo=espressif&logoColor=white)
 ![Raspberry Pi](https://img.shields.io/badge/Raspberry_Pi-C51A4A?style=flat-square&logo=raspberrypi&logoColor=white)
@@ -63,154 +113,29 @@ I enjoy working close to the hardware: understanding system constraints, designi
 ![CMake](https://img.shields.io/badge/CMake-064F8C?style=flat-square&logo=cmake&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)
 ![OpenCV](https://img.shields.io/badge/OpenCV-5C3EE8?style=flat-square&logo=opencv&logoColor=white)
-![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white)
 
 </div>
 
 ---
 
-## Featured Projects
-
-### [IoT Device Simulator](https://github.com/CyrusRaza/iot_device_sim)
-A C-based IoT edge-device simulator demonstrating connectivity patterns and a CMake-based build workflow.
-
-**Highlights:** MQTT-first transport, local Mosquitto broker using Docker Compose, and a foundation for additional transports.
-
-**Technologies:** C · CMake · MQTT · Docker · Mosquitto
-
-### [Motpipe — Multi-Object Tracking Pipeline](https://github.com/CyrusRaza/motpipe)
-A multi-object detection and tracking project with interchangeable detection and tracking approaches selected at runtime.
-
-**Highlights:** YOLOv8, YOLOv5, Faster R-CNN and SSD detectors; SORT, DeepSORT and ByteTrack trackers; Strategy Pattern.
-
-**Technologies:** Python · Computer Vision · Object Detection · Object Tracking
-
-### Embedded Communication Framework — C
-A modular, multithreaded communication pipeline designed to support multiple transport protocols through a common architecture.
-
-**Highlights**
-- Runtime protocol selection using the Strategy Pattern and function pointers
-- MQTT and WebSocket transport implementations
-- Extendable architecture designed to add transports without changing existing pipeline logic
-- Unit testing with Unity
-- CMake build system, Docker and GitHub Actions CI
-
-**Technologies:** C · Multithreading · MQTT · WebSocket · Unity · CMake · Docker · GitHub Actions
-
-> Add the repository link here when the project is published.
-
-### LoRaWAN Communication System — ESP32
-Developed firmware for a LoRaWAN communication system as the sole developer during my work at TU Chemnitz.
-
-**Highlights**
-- Three-thread firmware architecture: main, send and receive
-- Thread safety using mutexes and semaphores
-- Fragmentation of 222-byte payloads
-- Operation within EU868 duty-cycle constraints
-- 24-hour continuous validation on physical hardware
-- Python server-side tooling and MQTT forwarding
-
-**Technologies:** C · ESP32 · RTOS · LoRaWAN · MQTT · Python · Concurrency
-
-### IoT Smart Irrigation System
-A multi-node IoT architecture connecting sensor nodes, a gateway and an Embedded Linux platform.
-
-**Highlights**
-- MSP430-based sensor nodes
-- STM32 (ARM Cortex-M) gateway
-- Raspberry Pi running Embedded Linux
-- Wireless communication using Zigbee and LoRaWAN
-
-**Technologies:** C · MSP430 · STM32 · Raspberry Pi · Embedded Linux · Zigbee · LoRaWAN
-
-### Intelligent Insecticide Sprayer — BEng Thesis
-A vision-assisted insecticide spraying system implemented on an unmanned ground vehicle (UGV).
-
-**Highlights**
-- Real-time plant classification
-- Viola–Jones detection and image segmentation
-- Raspberry Pi with Embedded Linux
-- Multithreaded implementation
-- Processing of active image regions to reduce computation on constrained hardware
-
-**Technologies:** Embedded Linux · Raspberry Pi · Computer Vision · Image Processing · Multithreading
-
-### Event-Camera Optical Flow — MSc Thesis
-Research project investigating optical flow estimation from event-camera data.
-
-**Highlights**
-- Compared Contrast Maximization and neural-network-based approaches
-- Evaluated methods using Python, PyTorch and OpenCV
-- Focused on event-based vision and optimization methods
-
-**Technologies:** Python · PyTorch · OpenCV · Computer Vision · Event Cameras
-
-### Line-Following Robot
-A mobile robotics project implementing closed-loop motor control.
-
-**Highlights:** PID-based motor control, PWM motor actuation and infrared sensor feedback.
-
-**Technologies:** Embedded C · PID Control · PWM · IR Sensors
-
----
-
-## Professional Experience
-
-**Embedded Software Engineer — TU Chemnitz**
-- Developed ESP32 firmware for a LoRaWAN communication system.
-- Implemented multithreaded firmware and synchronization mechanisms.
-- Worked with payload fragmentation and EU868 radio constraints.
-- Validated firmware on physical hardware through extended testing.
-- Developed Python tooling for server-side communication and MQTT forwarding.
-
-**Service Engineer — Analytical Measuring Systems**
-- Installed, commissioned and maintained analytical measuring systems at customer sites.
-- Performed on-site hardware and software troubleshooting.
-
-**Independent Embedded Development**
-- Building C-based portfolio projects, including a modular communication framework.
-- Further developing skills in FreeRTOS and Zephyr.
-- Using AI-assisted development tools to support code review, debugging and unit testing.
-
----
-
-## Current Focus & Learning
-
-- FreeRTOS and Zephyr RTOS
-- Yocto Project and Embedded Linux build systems
-- U-Boot, device trees and systemd
-- CAN / CANopen and Modbus
-- BLE and low-power embedded design
-- Linux kernel and device-driver fundamentals
-- C++ for embedded applications
-- Embedded cybersecurity and the Cyber Resilience Act (CRA)
-
 ## Education
 
-**MSc Embedded Systems** — TU Chemnitz, Germany (2021–2025)
+**MSc Embedded Systems** | TU Chemnitz, Germany (2021 - 2025)
+Real-Time Systems, Multi-Sensor Systems, Digital Architectures, Computer Vision, Digital Signal Processing
 
-Focus areas: Real-Time Systems, Multi-Sensor Systems, Digital Components and Architectures, Computer Vision and Digital Signal Processing.
-
-**BEng Mechatronics** — NUST, Islamabad (2015–2019)
+**BEng Mechatronics** | NUST, Islamabad (2015 - 2019)
+Control Engineering, Embedded Systems, PID Control
 
 ## Languages
 
-- English — C1
-- German — B2
-- Urdu / Hindi — Native
+English (C1) · German (B2) · Urdu / Hindi (Native)
 
 ---
 
-## Let's Connect
-
-I'm interested in embedded software and firmware engineering opportunities involving microcontrollers, RTOS, IoT connectivity, Embedded Linux and hardware-oriented development.
-
-- **Email:** [c.razanaqvi@gmail.com](mailto:c.razanaqvi@gmail.com)
-- **LinkedIn:** [Cyrus Naqvi](https://www.linkedin.com/in/cyrus-naqvi-b96282194/)
-- **GitHub:** [github.com/CyrusRaza](https://github.com/CyrusRaza)
-
 <div align="center">
 
-**Building reliable systems, one layer closer to the hardware.** ⚙️
+**Looking for my next embedded or firmware role in Germany. Let's talk.**
+
+[Email](mailto:c.razanaqvi@gmail.com) · [LinkedIn](https://www.linkedin.com/in/cyrus-naqvi-b96282194/)
 
 </div>
